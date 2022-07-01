@@ -67,10 +67,10 @@ router.put('/edit', [auth, upload.single('image')], async (req, res) => {
   }
 });
 
-router.get('/people', auth, (req, res) => {
+router.get('/people', auth, async (req, res) => {
   let token = req.get('Authenticate');
   try {
-    const users = User.find({ token: { $ne: token } });
+    const users = await User.find({ token: { $ne: token } });
     res.send(users);
   } catch (err) {
     res.status(500).send(err);
